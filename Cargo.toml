@@ -1,0 +1,58 @@
+[package]
+name = "chronon-coordinator-macros"
+version = "0.1.0"
+edition = "2021"
+description = "Proc macros for Chronon scripts with chronon-coordinator typed scheduling and default_job"
+license = "MIT"
+repository = "https://github.com/deathbreakfast/chronon-coordinator-macros"
+publish = false
+
+[lib]
+proc-macro = true
+
+[features]
+default = ["default-job"]
+default-job = []
+
+[lints.rust]
+missing_docs = "deny"
+
+[lints.clippy]
+pedantic = { level = "warn", priority = -1 }
+nursery = { level = "warn", priority = -1 }
+unwrap_used = "deny"
+expect_used = "deny"
+dbg_macro = "deny"
+print_stdout = "deny"
+print_stderr = "deny"
+module_name_repetitions = "allow"
+must_use_candidate = "allow"
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"
+return_self_not_must_use = "allow"
+too_many_lines = "allow"
+cognitive_complexity = "allow"
+items_after_statements = "allow"
+
+[dependencies]
+syn = { version = "2.0", features = ["full", "extra-traits"] }
+quote = "1.0"
+proc-macro2 = "1.0"
+serde_json = "1.0"
+
+[dev-dependencies]
+anyhow = "1"
+chronon-core = { git = "https://github.com/unified-field-dev/chronon", rev = "6c9ec6dfe7e4343269cfb336ae9773e7e180cddb" }
+chronon-coordinator = { git = "https://github.com/unified-field-dev/chronon-coordinator", branch = "main" }
+chronon-executor = { git = "https://github.com/unified-field-dev/chronon", rev = "6c9ec6dfe7e4343269cfb336ae9773e7e180cddb" }
+log = "0.4"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1.0"
+valence = { package = "uf-valence", git = "https://github.com/unified-field-dev/valence", tag = "v0.1.2", default-features = false, features = ["mem"] }
+
+# uf-dev chronon-coordinator still pins deathbreakfast/chronon; unify crate identity to uf-dev tip.
+[patch."https://github.com/deathbreakfast/chronon"]
+chronon-core = { git = "https://github.com/unified-field-dev/chronon", rev = "6c9ec6dfe7e4343269cfb336ae9773e7e180cddb" }
+chronon-executor = { git = "https://github.com/unified-field-dev/chronon", rev = "6c9ec6dfe7e4343269cfb336ae9773e7e180cddb" }
+chronon-scheduler = { git = "https://github.com/unified-field-dev/chronon", rev = "6c9ec6dfe7e4343269cfb336ae9773e7e180cddb" }
+chronon-telemetry = { git = "https://github.com/unified-field-dev/chronon", rev = "6c9ec6dfe7e4343269cfb336ae9773e7e180cddb" }
