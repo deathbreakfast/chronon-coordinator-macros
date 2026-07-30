@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 description = "Proc macros for Chronon scripts with chronon-coordinator typed scheduling and default_job"
 license = "MIT"
-repository = "https://github.com/deathbreakfast/chronon-coordinator-macros"
+repository = "https://github.com/unified-field-dev/chronon-coordinator-macros"
 publish = false
 
 [lib]
@@ -49,10 +49,3 @@ log = "0.4"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1.0"
 valence = { package = "uf-valence", git = "https://github.com/unified-field-dev/valence", tag = "v0.1.2", default-features = false, features = ["mem"] }
-
-# uf-dev chronon-coordinator still pins deathbreakfast/chronon; unify crate identity to uf-dev tip.
-[patch."https://github.com/deathbreakfast/chronon"]
-chronon-core = { git = "https://github.com/unified-field-dev/chronon", rev = "6c9ec6dfe7e4343269cfb336ae9773e7e180cddb" }
-chronon-executor = { git = "https://github.com/unified-field-dev/chronon", rev = "6c9ec6dfe7e4343269cfb336ae9773e7e180cddb" }
-chronon-scheduler = { git = "https://github.com/unified-field-dev/chronon", rev = "6c9ec6dfe7e4343269cfb336ae9773e7e180cddb" }
-chronon-telemetry = { git = "https://github.com/unified-field-dev/chronon", rev = "6c9ec6dfe7e4343269cfb336ae9773e7e180cddb" }
