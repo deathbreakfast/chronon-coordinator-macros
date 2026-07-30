@@ -58,4 +58,4 @@ AWS campaign inventory and L0/L4 bench studies: **waived** for this L1 packaging
 ## Notes
 
 - Tests may `unwrap`/`expect`; production expanded paths map failures to Chronon errors.
-- Sad-path unit tests assert error message content, not smoke-only `is_err()`.
+- Sad-path unit tests assert error message content, (stronger than `is_err()` alone).
