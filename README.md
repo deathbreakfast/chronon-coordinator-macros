@@ -31,6 +31,10 @@ pub async fn daily_cleanup(ctx: Box<dyn ScriptContext>) -> anyhow::Result<()> {
 
 Upstream Chronon still ships Valence-free [`chronon-macros`](https://github.com/unified-field-dev/chronon). This crate adds coordinator typed `ScriptScheduler` / `default_job` inventory on top.
 
+Runnable demo (macro + `register_default_jobs_embedded`) lives on the
+[chronon-coordinator](https://github.com/deathbreakfast/chronon-coordinator) crate:
+`cargo run -p chronon-coordinator --example script_with_default_job`.
+
 ## Features
 
 | Feature | Default | Purpose |
