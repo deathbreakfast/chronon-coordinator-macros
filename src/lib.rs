@@ -17,6 +17,12 @@
 //!     Ok(())
 //! }
 //! ```
+//!
+//! # Feature flags
+//!
+//! | Feature | Default | Purpose |
+//! |---------|---------|---------|
+//! | `default-job` | yes | `default_job(...)` on [`script`] emits `DefaultJobDescriptor` inventory for boot bootstrap |
 
 use proc_macro::TokenStream;
 
