@@ -1,11 +1,11 @@
 # chronon-coordinator-macros
 
-[![CI](https://github.com/deathbreakfast/chronon-coordinator-macros/actions/workflows/ci.yml/badge.svg)](https://github.com/deathbreakfast/chronon-coordinator-macros/actions/workflows/ci.yml)
+[![CI](https://github.com/unified-field-dev/chronon-coordinator-macros/actions/workflows/ci.yml/badge.svg)](https://github.com/unified-field-dev/chronon-coordinator-macros/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-[GitHub](https://github.com/deathbreakfast/chronon-coordinator-macros) · `cargo doc -p chronon-coordinator-macros --open`
+[GitHub](https://github.com/unified-field-dev/chronon-coordinator-macros) · `cargo doc -p chronon-coordinator-macros --open`
 
-Proc-macro for product Chronon scripts that register with upstream Chronon inventory and wire [chronon-coordinator](https://github.com/deathbreakfast/chronon-coordinator) typed scheduling / optional `default_job(...)`.
+Proc-macro for product Chronon scripts that register with upstream Chronon inventory and wire [chronon-coordinator](https://github.com/unified-field-dev/chronon-coordinator) typed scheduling / optional `default_job(...)`.
 
 Formerly `chronon-macros-valence` (nested under valence-platform). Attribute path:
 
@@ -14,7 +14,7 @@ Formerly `chronon-macros-valence` (nested under valence-platform). Attribute pat
 | `#[chronon_macros_valence::script(...)]` | `#[chronon_coordinator_macros::script(...)]` |
 
 ```toml
-chronon-coordinator-macros = { git = "https://github.com/deathbreakfast/chronon-coordinator-macros", branch = "main" }
+chronon-coordinator-macros = { git = "https://github.com/unified-field-dev/chronon-coordinator-macros", branch = "main" }
 ```
 
 ```rust
@@ -32,7 +32,7 @@ pub async fn daily_cleanup(ctx: Box<dyn ScriptContext>) -> anyhow::Result<()> {
 Upstream Chronon still ships Valence-free [`chronon-macros`](https://github.com/unified-field-dev/chronon). This crate adds coordinator typed `ScriptScheduler` / `default_job` inventory on top.
 
 Runnable demo (macro + `register_default_jobs_embedded`) lives on the
-[chronon-coordinator](https://github.com/deathbreakfast/chronon-coordinator) crate:
+[chronon-coordinator](https://github.com/unified-field-dev/chronon-coordinator) crate:
 `cargo run -p chronon-coordinator --example script_with_default_job`.
 
 ## Features
