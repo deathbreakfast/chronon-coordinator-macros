@@ -46,9 +46,9 @@ cargo doc --no-deps --all-features
 
 | Concern | Status | Notes |
 |---------|--------|-------|
-| Git/trust remote | deps on `unified-field-dev` chronon/coordinator | package `repository` may still say deathbreakfast |
+| Git/trust remote | deps on `unified-field-dev` chronon/coordinator/valence | package `repository` is `unified-field-dev` |
 | Secrets in repo | none expected | Examples are compile-only contracts |
-| Supply-chain pins | uf-dev chronon rev `6c9ec6d` + coordinator `main` | patch deathbreakfast→uf-dev (coordinator still deathbreakfast) |
+| Supply-chain pins | uf-dev git deps on `branch = "main"` | no `[patch]` tables; `Cargo.lock` pins uf-dev `main` |
 | Authz redesign | out of scope | Handlers still use host Valence factory trust |
 
 ## Campaign / bench
