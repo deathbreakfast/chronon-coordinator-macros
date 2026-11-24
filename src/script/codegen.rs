@@ -3,7 +3,41 @@
 use proc_macro2::TokenStream as TokenStream2;
 use quote::quote;
 use syn::spanned::Spanned;
-use syn::{Pat, PatType, Signature};
+use syn::{Attribute, Expr, ExprLit, Lit, Meta, Pat, PatType, Signature};
+
+/// First paragraph of the `///` doc comment as one trimmed line, or `None` when there is none.
+pub(super) fn doc_description(attrs: &[Attribute]) -> Option<String> {
+    let mut lines: Vec<String> = Vec::new();
+    for attr in attrs {
+        let Meta::NameValue(nv) = &attr.meta else {
+            continue;
+        };
+        if !nv.path.is_ident("doc") {
+            continue;
+        }
+        let Expr::Lit(ExprLit {
+            lit: Lit::Str(text),
+            ..
+        }) = &nv.value
+        else {
+            continue;
+        };
+        let line = text.value();
+        let line = line.trim();
+        if line.is_empty() {
+            if lines.is_empty() {
+                continue;
+            }
+            break;
+        }
+        lines.push(line.to_string());
+    }
+    if lines.is_empty() {
+        None
+    } else {
+        Some(lines.join(" "))
+    }
+}
 
 pub(super) fn generate_params_struct(
     fn_vis: &syn::Visibility,
