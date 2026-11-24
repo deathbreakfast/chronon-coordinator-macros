@@ -11,8 +11,9 @@ use syn::{ItemFn, LitStr};
 
 use attrs::ScriptAttrs;
 use codegen::{
-    generate_deserialization_code, generate_handle_function, generate_internal_signature,
-    generate_invoke_script, generate_params_struct, generate_script_type_api, to_pascal_case,
+    doc_description, generate_deserialization_code, generate_handle_function,
+    generate_internal_signature, generate_invoke_script, generate_params_struct,
+    generate_script_type_api, to_pascal_case,
 };
 use signature::{build_signature_metadata, collect_script_params, validate_signature};
 
@@ -63,6 +64,10 @@ fn expand_script(attrs: ScriptAttrs, input: &ItemFn) -> syn::Result<TokenStream2
     let deserialize_code = generate_deserialization_code(&params_struct_name, is_unit_struct);
     let invoke_script = generate_invoke_script(internal_fn_name, &params, is_unit_struct)?;
     let signature_json_lit = LitStr::new(&signature_json, fn_name.span());
+    let with_description = doc_description(fn_attrs).map(|description| {
+        let description_lit = LitStr::new(&description, fn_name.span());
+        quote! { .with_description(#description_lit) }
+    });
 
     let default_job_tokens = {
         #[cfg(feature = "default-job")]
@@ -100,6 +105,7 @@ fn expand_script(attrs: ScriptAttrs, input: &ItemFn) -> syn::Result<TokenStream2
                 #signature_json_lit,
                 #signature_hash,
             )
+            #with_description
         }
 
         #default_job_tokens
@@ -154,6 +160,33 @@ mod tests {
         assert!(expanded.contains("fn get_job_by_name"));
         assert!(expanded.contains("ScriptDescriptor"));
         assert!(expanded.contains("dry_run"));
+        assert!(!expanded.contains("with_description"));
+    }
+
+    #[test]
+    fn script_impl_impl_uses_first_doc_paragraph_as_description_happy() {
+        let tokens = script_impl_impl(
+            quote!(name = "daily_cleanup"),
+            quote! {
+                /// Removes stale rows
+                /// older than a week.
+                ///
+                /// Second paragraph is not part of the description.
+                pub async fn daily_cleanup(
+                    ctx: Box<dyn chronon_core::ScriptContext>,
+                ) -> anyhow::Result<()> {
+                    let _ = ctx;
+                    Ok(())
+                }
+            },
+        )
+        .expect("valid script should expand");
+
+        let expanded = tokens.to_string();
+        assert!(expanded.contains("with_description (\"Removes stale rows older than a week.\")"));
+        assert!(
+            !expanded.contains("with_description (\"Removes stale rows older than a week. Second")
+        );
     }
 
     #[test]
